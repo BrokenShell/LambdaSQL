@@ -60,20 +60,20 @@ cloud = psycopg2.connect(
     port="5432",
 )
 cloud_curs = cloud.cursor()
-# cloud_curs.execute("""
-# CREATE TABLE charactercreator_character (
-#     character_id    SERIAL PRIMARY KEY,
-#     name            varchar(30),
-#     level           INT,
-#     exp             INT,
-#     hp              INT,
-#     strength        INT,
-#     intelligence    INT,
-#     dexterity       INT,
-#     wisdom          INT
-# );
-# """)
-# cloud.commit()
+cloud_curs.execute("""
+CREATE TABLE charactercreator_character (
+    character_id    SERIAL PRIMARY KEY,
+    name            varchar(30),
+    level           INT,
+    exp             INT,
+    hp              INT,
+    strength        INT,
+    intelligence    INT,
+    dexterity       INT,
+    wisdom          INT
+);
+""")
+cloud.commit()
 for character in characters:
     cloud_curs.execute(f"""
     INSERT INTO charactercreator_character

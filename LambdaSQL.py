@@ -14,22 +14,22 @@ LIMIT 10;
 # Creates a database
 conn = sql.connect("toy_db.sqlite3")
 # Adds a cursor
-# curs = conn.cursor()
+curs = conn.cursor()
 # Creates a Table - don't do this more than once!!!
-# query = """
-# CREATE TABLE toy (name varchar(30), size int);
-# """
-# curs.execute(query)
+query = """
+CREATE TABLE toy (name varchar(30), size int);
+"""
+curs.execute(query)
 
 # Creates 2 Columns inside the Table and populates the first row.
-# query = """
-# INSERT INTO toy (name, size)
-# VALUES ("Awesome", 27);
-# """
-# curs.execute(query)
+query = """
+INSERT INTO toy (name, size)
+VALUES ("Awesome", 27);
+"""
+curs.execute(query)
 # Commits Changes and closes the cursor
-# curs.close()
-# conn.commit()
+curs.close()
+conn.commit()
 # Gets new cursor
 curs = conn.cursor()
 # Makes selection and prints the results
