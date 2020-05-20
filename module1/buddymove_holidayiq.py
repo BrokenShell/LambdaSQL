@@ -1,3 +1,7 @@
+"""
+Unit 3 Sprint 2 SQL Module 1
+Part 2 Creating a Database
+"""
 import sqlite3 as sql
 import pandas as pd
 
@@ -7,7 +11,6 @@ curs = connection.cursor()
 
 buddy = pd.read_csv("https://github.com/BrokenShell/DS-Unit-3-Sprint-2-SQL-and-Databases/raw/master/module1-introduction-to-sql/buddymove_holidayiq.csv")
 buddy.to_sql('review', con=connection, index=False)
-
 
 print("\nNumber of rows:",
       *curs.execute("SELECT COUNT(*) FROM review;").fetchone())
