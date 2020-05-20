@@ -84,7 +84,28 @@ print("Number of weapons per character: (first 20)")
 print('\n'.join(f"{k}: {v}" for k, v in list(dw.items())[:20]), end='\n\n')
 
 # On average, how many Items does each Character have?
-print(f"Average number of items per character: {statistics.mean(d.values()):.1f}")
+print(f"Average number of items per character: {statistics.mean(d.values()):.2f}")
 
 # On average, how many Weapons does each character have?
-print(f"Average number of weapons per character: {statistics.mean(dw.values()):.1f}")
+print(f"Average number of weapons per character: {statistics.mean(dw.values()):.2f}")
+
+# Another approach:
+ipc = connection.execute("""
+SELECT count(cci.item_id), count(distinct cc.name)
+FROM charactercreator_character AS cc, armory_item AS ai,
+charactercreator_character_inventory AS cci
+WHERE cc.character_id = cci.character_id
+AND ai.item_id = cci.item_id;
+""")
+n_items, n_chars = ipc.fetchall()[0]
+print(f'Average number of items per character: {n_items / n_chars:.2f}')
+
+wpc = connection.execute("""
+SELECT count(cci.item_id), count(distinct cc.name)
+FROM charactercreator_character AS cc, armory_weapon AS aw,
+charactercreator_character_inventory AS cci
+WHERE cc.character_id = cci.character_id
+AND aw.item_ptr_id = cci.item_id
+""")
+n_items, n_chars = wpc.fetchall()[0]
+print(f'Average number of weapons per character: {n_items / n_chars:.2f}')
