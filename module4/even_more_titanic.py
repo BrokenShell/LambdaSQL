@@ -54,3 +54,21 @@ print(f'Question 6 - Average Fare Per Class:{psyco_q(query9)}\n\t Average Fare p
 print(f'Question 7 - Average SS Per Class:{psyco_q(query11)}\n\t Average SS per Survival:{psyco_q(query12)}')
 print(f'Question 8 - Average PC Per Class:{psyco_q(query13)}\n\t Average PC per Survival:{psyco_q(query14)}')
 print(f'Question 9 - Same Name:{psyco_q(query15)}')
+
+married_females = psyco_q("""
+SELECT Name, count(*)
+FROM Titanic
+WHERE Name LIKE 'Mrs.%'
+GROUP BY Name
+""")
+married_names = {name[0].split(' ')[-1] for name in married_females}
+all_names = psyco_q(f"""
+SELECT Name
+FROM Titanic
+""")
+last_names = [name[0].split(' ')[-1] for name in all_names]
+married_couples = []
+for name in married_names:
+    if last_names.count(name) >= 2:
+        married_couples.append(name)
+print(f'Estimated Number of Married Couples: {len(married_couples)}')
