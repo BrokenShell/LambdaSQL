@@ -10,13 +10,11 @@ from collections import defaultdict
 # Connect to local database
 connection = sql.connect("rpg_db.sqlite3").cursor()
 
-
 # How many total Characters are there?
 total_characters = connection.execute("""
 SELECT COUNT(*) FROM charactercreator_character;
 """).fetchall()
 print(f"Number of characters: {total_characters[0][0]}\n")
-
 
 # How many of each specific subclass?
 clerics = connection.execute(
@@ -43,13 +41,11 @@ classes = {
 }
 print('\n'.join(f"{k}: {v[0][0]}" for k, v in classes.items()), end='\n\n')
 
-
 # How many total Items?
 items = connection.execute("""
 SELECT COUNT(*) FROM armory_item;
 """).fetchall()[0][0]
 print(f"Number of items: {items}\n")
-
 
 # How many of the Items are weapons? How many are not?
 weapons = connection.execute("""
@@ -58,6 +54,7 @@ WHERE armory_item.item_id = armory_weapon.item_ptr_id;
 """).fetchall()[0][0]
 print(f"Number of weapons: {weapons}")
 print(f"Number of non-weapon items: {items - weapons}\n")
+
 # How many Items does each character have?
 items_by_char = connection.execute("""
 SELECT cc.name, ai.name
@@ -71,7 +68,6 @@ for char in items_by_char:
     d[char[0]] += 1
 print("Number of items per character: (first 20)")
 print('\n'.join(f"{k}: {v}" for k, v in list(d.items())[:20]), end='\n\n')
-
 
 # How many Weapons does each character have?
 weapons_by_char = connection.execute("""
@@ -87,10 +83,8 @@ for char in weapons_by_char:
 print("Number of weapons per character: (first 20)")
 print('\n'.join(f"{k}: {v}" for k, v in list(dw.items())[:20]), end='\n\n')
 
-
 # On average, how many Items does each Character have?
 print(f"Average number of items per character: {statistics.mean(d.values()):.1f}")
-
 
 # On average, how many Weapons does each character have?
 print(f"Average number of weapons per character: {statistics.mean(dw.values()):.1f}")
