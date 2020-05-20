@@ -74,7 +74,7 @@ print('\n'.join(f"{k}: {v}" for k, v in list(d.items())[:20]), end='\n\n')
 
 
 # How many Weapons does each character have?
-items_by_char = connection.execute("""
+weapons_by_char = connection.execute("""
 SELECT cc.name
 FROM charactercreator_character AS cc, armory_weapon AS aw,
 charactercreator_character_inventory AS cci
@@ -82,7 +82,7 @@ WHERE cc.character_id = cci.character_id
 AND aw.item_ptr_id = cci.item_id;
 """)
 dw = defaultdict(int)
-for char in items_by_char:
+for char in weapons_by_char:
     dw[char[0]] += 1
 print("Number of weapons per character: (first 20)")
 print('\n'.join(f"{k}: {v}" for k, v in list(dw.items())[:20]), end='\n\n')
