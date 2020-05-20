@@ -3,14 +3,14 @@ More Titanic Data
 
 """
 import psycopg2
+from module4.creds import cred
 
 
 cloud = psycopg2.connect(
-    dbname="rphzklxx",
-    user="rphzklxx",
-    password="J0i83etc3hsiBVaNQ5F999zzJJcFxluM",
-    host="rajje.db.elephantsql.com",
-    port="5432",
+    dbname=cred.dbname,
+    user=cred.user,
+    password=cred.password,
+    host=cred.host,
 )
 curs = cloud.cursor()
 

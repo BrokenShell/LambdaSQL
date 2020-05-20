@@ -88,3 +88,19 @@ print(f"Average number of items per character: {statistics.mean(d.values()):.1f}
 
 # On average, how many Weapons does each character have?
 print(f"Average number of weapons per character: {statistics.mean(dw.values()):.1f}")
+
+"""
+SELECT 
+  avg(AlbumCount) as avg_albums -- 1.26
+FROM (
+    SELECT
+      artists.ArtistId
+      ,artists.Name as ArtistName
+      ,count(distinct albums.AlbumId) as AlbumCount
+      ,count(distinct tracks.TrackId) as TrackCount
+    FROM artists
+    LEFT JOIN albums ON artists.ArtistId = albums.ArtistId
+    LEFT JOIN tracks ON tracks.AlbumId = albums.AlbumId
+    GROUP BY artists.ArtistId
+)
+"""
