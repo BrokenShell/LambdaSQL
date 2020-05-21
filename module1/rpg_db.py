@@ -9,6 +9,7 @@ from collections import defaultdict
 
 # Connect to local database
 connection = sql.connect("rpg_db.sqlite3").cursor()
+# connection.row_factory = sql.Row
 
 # How many total Characters are there?
 total_characters = connection.execute("""
