@@ -110,3 +110,15 @@ AND aw.item_ptr_id = cci.item_id
 """)
 n_items, n_chars = wpc.fetchall()[0]
 print(f'Average number of weapons per character: {n_items / n_chars:.2f}')
+
+
+# And yet another, with zeros
+wpc2 = connection.execute("""
+SELECT c.character_id, c.name, count(distinct w.item_ptr_id)
+FROM charactercreator_character AS c
+LEFT JOIN charactercreator_character_inventory AS inv ON c.character_id = inv.character_id
+LEFT JOIN armory_weapon AS w ON w.item_ptr_id = inv.item_id
+GROUP BY 1
+""")
+print()
+print(*wpc2.fetchall(), sep='\n')
