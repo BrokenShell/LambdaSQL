@@ -1,5 +1,6 @@
 import psycopg2
 import pandas as pd
+from module4.creds import cred
 
 
 url = "https://github.com/BrokenShell/DS-Unit-3-Sprint-2-SQL-and-Databases/raw/master/module2-sql-for-analysis/titanic.csv"
@@ -11,12 +12,12 @@ titanic['Name'] = titanic["Name"].str.replace("'", "")
 print(titanic.head().to_string())
 
 cloud = psycopg2.connect(
-    dbname="rphzklxx",
-    user="rphzklxx",
-    password="J0i83etc3hsiBVaNQ5F999zzJJcFxluM",
-    host="rajje.db.elephantsql.com",
-    port="5432",
+    dbname=cred.dbname,
+    user=cred.user,
+    password=cred.password,
+    host=cred.host,
 )
+
 cloud.cursor().execute("""
 CREATE TABLE Titanic (
     Survived            INT,

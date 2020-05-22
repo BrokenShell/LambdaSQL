@@ -16,8 +16,9 @@ cloud = psycopg2.connect(
 curs = cloud.cursor()
 
 curs.execute("""
-SELECT * FROM Titanic
-WHERE Age < 18;
+SELECT name, age 
+FROM Titanic
+WHERE Age < 18 and sex = 'female';
 """)
 
 print("Kids:", *curs.fetchall(), sep='\n')
