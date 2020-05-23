@@ -1,6 +1,7 @@
 """ Cloud ETL Pipe,  SQL -> Postgres """
 import psycopg2
 import sqlite3 as sql
+from module2.creds import cred
 
 
 """ Extract """
@@ -18,11 +19,10 @@ print(info)
 
 """ Load """
 cloud = psycopg2.connect(
-    dbname="rphzklxx",
-    user="rphzklxx",
-    password="<PASSWORD>",
-    host="rajje.db.elephantsql.com",
-    port="5432",
+    dbname=cred.dbname,
+    user=cred.user,
+    password=cred.password,
+    host=cred.host,
 )
 cloud_curs = cloud.cursor()
 cloud_curs.execute("""

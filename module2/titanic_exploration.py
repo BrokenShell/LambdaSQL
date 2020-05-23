@@ -3,7 +3,7 @@ Titanic Data
 
 """
 import psycopg2
-from module4.creds import cred
+from module2.creds import cred
 
 
 cloud = psycopg2.connect(

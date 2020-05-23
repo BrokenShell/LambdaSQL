@@ -1,6 +1,6 @@
 import psycopg2
 import pandas as pd
-from module4.creds import cred
+from module2.creds import cred
 
 
 url = "https://github.com/BrokenShell/DS-Unit-3-Sprint-2-SQL-and-Databases/raw/master/module2-sql-for-analysis/titanic.csv"
