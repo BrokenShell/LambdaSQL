@@ -19,9 +19,11 @@ cloud = psycopg2.connect(
     password=cred.password,
     host=cred.host,
 )
-cloud.cursor().execute('DROP TABLE IF EXISTS Titanic;')
+cursor = cloud.cursor()
 
-cloud.cursor().execute("""
+cursor.execute('DROP TABLE IF EXISTS Titanic;')
+
+cursor.execute("""
 CREATE TABLE Titanic (
     Survived            INT,
     Pclass              INT,
@@ -34,16 +36,31 @@ CREATE TABLE Titanic (
 """)
 
 # for row in titanic.values:
-#     cloud.cursor().execute(f"""
+#     cursor.execute(f"""
 #     INSERT INTO Titanic
 #     (Survived, Pclass, Name, Sex, Age, SiblingsSpouses, ParentsChildren, Fare)
 #     VALUES {tuple(row)};
 #     """)
 
-execute_values(cloud.cursor(), """
+# for row in titanic.values:
+#     cursor.execute("""
+#     INSERT INTO Titanic
+#     (Survived, Pclass, Name, Sex, Age, SiblingsSpouses, ParentsChildren, Fare)
+#     VALUES %s;
+#     """, [tuple(row)])
+
+execute_values(cursor, """
     INSERT INTO Titanic
     (Survived, Pclass, Name, Sex, Age, SiblingsSpouses, ParentsChildren, Fare)
     VALUES %s;
 """, [tuple(row) for row in titanic.values])
 
 cloud.commit()
+
+cursor.execute("""
+SELECT *
+FROM Titanic
+LIMIT 1;
+""")
+
+print(cursor.fetchall())
