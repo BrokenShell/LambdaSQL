@@ -4,6 +4,7 @@ It does take a little longer to setup though.
 """
 from pymongo import MongoClient
 import sqlite3 as sql
+from module3.creds import M_PWD
 
 
 conn = sql.connect("rpg_db.sqlite3")
@@ -18,19 +19,14 @@ keys = (
 )
 
 db = MongoClient(
-    "mongodb+srv://brokenshell:<PASSWORD>@cluster0-xz3sf.mongodb.net/test?retryWrites=true&w=majority"
+    f"mongodb+srv://brokenshell:{M_PWD}@cluster0-xz3sf.mongodb.net/test?retryWrites=true&w=majority"
 ).rpg_db.characters
 
 db.insert_many(
     {k: v for k, v in zip(keys, char[1:])} for char in characters
 )
 
-print(*db.characters.find(), sep='\n')
+print(*db.find(), sep='\n')
 """
-Stretch Goal: See MonsterData
-I built almost everything that went into this:
-    Storm.hpp 
-    Fortuna.py 
-    MonsterFactory.py
-https://colab.research.google.com/drive/1Sm4uCSAbo-TwI-BX1SRWiBfzk9AFXqfy
+Stretch Goal: See monsterDB.py
 """
