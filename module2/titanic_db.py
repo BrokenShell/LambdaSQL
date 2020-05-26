@@ -1,5 +1,7 @@
 import psycopg2
 import pandas as pd
+from psycopg2.extras import execute_values
+
 from module2.creds import cred
 
 
@@ -17,6 +19,7 @@ cloud = psycopg2.connect(
     password=cred.password,
     host=cred.host,
 )
+cloud.cursor().execute('DROP TABLE IF EXISTS Titanic;')
 
 cloud.cursor().execute("""
 CREATE TABLE Titanic (
@@ -29,10 +32,17 @@ CREATE TABLE Titanic (
     ParentsChildren     INT,
     Fare                INT);
 """)
-for row in titanic.values:
-    cloud.cursor().execute(f"""
+# for row in titanic.values:
+#     cloud.cursor().execute(f"""
+#     INSERT INTO Titanic
+#     (Survived, Pclass, Name, Sex, Age, SiblingsSpouses, ParentsChildren, Fare)
+#     VALUES {tuple(row)};
+#     """)
+
+execute_values(cloud.cursor(), """
     INSERT INTO Titanic
     (Survived, Pclass, Name, Sex, Age, SiblingsSpouses, ParentsChildren, Fare)
-    VALUES {tuple(row)};
-    """)
+    VALUES %s;
+""", [tuple(row) for row in titanic.values])
+
 cloud.commit()
